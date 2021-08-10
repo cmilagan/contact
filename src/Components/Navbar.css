@@ -1,0 +1,36 @@
+.navbar {
+    overflow: hidden;
+    background-color: #242424;
+    height: 80px;
+    justify-content: center;
+}
+
+.navbar input[type=text] {
+    float: left;
+    padding: 6px;
+    border: none;
+    margin-top: 20px;
+    margin-left: 16px;
+    font-size: 24px;
+}
+
+.navbar button {
+    float: right;
+    margin-top: 20px;
+    margin-right: 16px;
+}
+
+.navbar button:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 768px) {
+    .navbar input[type=text] {
+        font-size: 14px;
+    }
+    .navbar button {
+        font-size: 14px;
+    }
+}
