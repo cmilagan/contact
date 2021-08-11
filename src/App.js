@@ -9,7 +9,7 @@ import "./Navbar.css"
 function App() {
 
   const [items, setItems] = useState([])
-
+  const [searchTerm, setSearchTerm] = useState('')
     useEffect(() => {
         axios.get('https://jsonplaceholder.typicode.com/users')
             .then(res => {
@@ -28,7 +28,7 @@ function App() {
             <div className="left">
                 
             </div>
-            <input type="text" placeholder="Search.."/>
+            <input type="text" placeholder="Search.." onChange={event => {setSearchTerm(event.target.value)}}/>
             <button>
                 <AiOutlineSortAscending size="24px" color="black"/>
             </button>
@@ -38,7 +38,13 @@ function App() {
         </div>
         <div className="container">
           <ul>
-            {items.map(item => (
+            {items.filter((item) => {
+                if (searchTerm == "") {
+                  return item
+                } else if (item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                  return item
+                }
+              }).map((item, key) => (
               <li key={item.id}>
                 <h1>{item.name}</h1>
                 <p className="username">AKA: {item.username}</p>
