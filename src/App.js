@@ -1,47 +1,27 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
+import {useState, useEffect} from 'react'
+import axios from 'axios'
 import { AiFillLinkedin, AiFillMail, AiFillPhone, AiOutlineDribbble } from "react-icons/ai";
 import "./App.css"
 import { AiOutlineSortAscending, AiOutlineSortDescending } from "react-icons/ai";
 import "./Navbar.css"
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      isLoaded: false,
-    }
-  }
 
-  componentDidMount () {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(res => res.json())
-      .then(json => {
-        this.setState({
-          isLoaded: true,
-          items: json,
-        })
-      });
-  }
+function App() {
 
+  const [items, setItems] = useState([])
+
+    useEffect(() => {
+        axios.get('https://jsonplaceholder.typicode.com/users')
+            .then(res => {
+                console.log(res)
+                setItems(res.data)
+            })
+            .catch(err => {
+                console.log(err)   
+            })
+
+    }, [])
   
-  
-  render() {
-
-    var { isLoaded, items } = this.state;
-
-    if (!isLoaded) {
-      return (
-        <div>Loading....</div>
-      );
-    }
-    // sorting alphabetically
-    function asc() {
-      items.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-    }
-
-    function desc() {
-      items.sort((a,b) => (a.name > b.name) ? -1 : ((b.name > a.name) ? 1 : 0));
-    }
     return (
       <div className="App">
         <div className="navbar">
@@ -49,10 +29,10 @@ class App extends Component {
                 
             </div>
             <input type="text" placeholder="Search.."/>
-            <button onClick={asc}>
+            <button>
                 <AiOutlineSortAscending size="24px" color="black"/>
             </button>
-            <button onClick={desc}>
+            <button>
                 <AiOutlineSortDescending size="24px" color="black"/>
             </button>
         </div>
@@ -77,10 +57,9 @@ class App extends Component {
             ))};
           </ul>
         </div>
-
+  
       </div>
     );
-  }
 }
 
-export default App;
+export default App
